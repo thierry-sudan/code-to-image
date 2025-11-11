@@ -24,7 +24,7 @@ By turning code into an image, you can still share or visualize huge projects in
 
 npm install canvas
 or
-yarn install canvas 
+yarn add canvas 
 
 ⚙️ Usage
 node code_to_image.js
