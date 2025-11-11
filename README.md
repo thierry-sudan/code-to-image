@@ -21,7 +21,10 @@ Large language models (LLMs) have a context window limit, meaning they can’t p
 By turning code into an image, you can still share or visualize huge projects in a single artifact, or let an AI “see” it via image input.
 
 📦 Installation
+
 npm install canvas
+or
+yarn install canvas 
 
 ⚙️ Usage
 node code_to_image.js
