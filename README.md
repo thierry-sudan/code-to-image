@@ -47,7 +47,7 @@ Follow the [node-canvas Windows installation guide](https://github.com/Automatti
 ### Basic usage
 
 ```bash
-node code_to_image.js
+node code_to_image.mjs
 ```
 
 By default, this reads the `./src` folder and generates `src_code_full.png`.
