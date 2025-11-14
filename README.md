@@ -1,40 +1,159 @@
 # 🧩 Code-to-Image Generator
 
-This script converts an entire source code directory (like src/) into one single giant PNG image. It’s a practical trick used to bypass AI context limits — instead of sending 10,000+ lines of code as text, you can send one compact image that contains everything.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-16%2B-green.svg)](https://nodejs.org/)
+
+> [Version française](README.fr.md)
+
+Convert an entire source code directory into a single giant PNG image. A practical trick to bypass AI context limits — instead of sending 10,000+ lines of code as text, you can send one compact image that contains everything.
 
 ## 🚀 Features
 
-Recursively reads all files from a given folder (e.g., src/)
+- ✅ Recursively reads all files from a given folder (e.g., `src/`)
+- ✅ Includes each file name as a header before its contents
+- ✅ Renders the full code as monospaced text on a white background
+- ✅ Produces a single giant PNG image (`src_code_full.png`)
+- ✅ Automatically crops if the image height exceeds ~40,000 px (memory limit)
 
-Includes each file name as a header before its contents
+## 🧠 Why?
 
-Renders the full code as monospaced text on a white background
+Large language models (LLMs) have a context window limit, meaning they can't process very long codebases at once. By turning code into an image, you can still share or visualize huge projects in a single artifact, or let an AI "see" it via image input.
 
-Produces a single giant PNG image (src_code_full.png)
+## 📦 Installation
 
-Optionally crops if the image height exceeds memory limits (~40,000 px)
+```bash
+npm install canvas
+# or
+yarn add canvas
+```
 
-## 🧠 Why
+On some systems, you might need to install system dependencies for `canvas`:
 
-Large language models (LLMs) have a context window limit, meaning they can’t process very long codebases at once. By turning code into an image, you can still share or visualize huge projects in a single artifact, or let an AI “see” it via image input.
+**Ubuntu/Debian:**
+```bash
+sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+```
+
+**macOS:**
+```bash
+brew install pkg-config cairo pango libpng jpeg giflib librsvg
+```
+
+**Windows:**
+Follow the [node-canvas Windows installation guide](https://github.com/Automattic/node-canvas/wiki/Installation:-Windows)
+
+## ⚙️ Usage
+
+### Basic usage
+
+```bash
+node code_to_image.js
+```
+
+By default, this reads the `./src` folder and generates `src_code_full.png`.
+
+### Customization
+
+Modify the parameters directly in the script:
+
+```javascript
+generateImage("./src");  // Change the source path
+generateImage("./src", "my_custom_output.png");  // Custom output filename
+```
+
+## 📁 Code structure
+
+```javascript
+import fs from "fs";
+import path from "path";
+import { createCanvas } from "canvas";
+
+function listFiles(dir) {
+  // Recursively reads all files
+}
+
+function generateImage(rootDir, outputFile = "src_code_full.png") {
+  // Generates the final PNG image
+}
+
+generateImage("./src");
+```
 
 ## 🔒 Security & Privacy Considerations
 
-Code confidentiality – Converting code to an image does not make it safe to share publicly. Treat any sensitive or proprietary code carefully.
+⚠️ **Important:** Converting code to an image does NOT make it safe to share publicly.
 
-LLM privacy – Before feeding the image into any LLM, ensure the model or service respects data privacy and doesn’t retain your code.
+- **Code confidentiality** – Treat any sensitive or proprietary code carefully
+- **LLM privacy** – Before feeding the image into any LLM, ensure the model or service respects data privacy and doesn't retain your code
+- **Internal use recommended** – For sensitive projects, use this tool locally rather than sending images to third-party APIs
+- **Optional encryption** – Consider encrypting or obfuscating code if you must share images externally
 
-Internal use recommended – For sensitive projects, use this tool locally rather than sending images to third-party APIs.
+## 💡 Use cases
 
-Optional encryption – Consider encrypting or obfuscating code if you must share images externally.
+- 📊 Visualize large projects at a glance
+- 🔍 Conduct massive code reviews
+- 🤖 Prepare codebases for LLMs with image input
+- 📸 Create code snapshots for documentation
+- 🎓 Share code in presentations without copy-paste
 
-## 📦 Installation
-npm install canvas
-or
-yarn add canvas
+## 🛠️ Example output
 
-## ⚙️ Usage
-node code_to_image.js
+The generated image will contain:
 
+```
+# ./src/index.js
+import express from 'express';
+const app = express();
+...
 
-This tool is perfect for visualizing huge projects, doing massive code reviews, or preparing codebases for LLMs with image input — just remember to keep security in mind.
+# ./src/utils/helper.js
+export function formatDate(date) {
+  ...
+}
+```
+
+## ⚡ Limitations
+
+- Maximum height is limited to **40,000 pixels** for memory reasons
+- Very large files may take time to process
+- Only text files are included (no binaries)
+- The image can become very large for big codebases
+
+## 🎨 Configuration
+
+You can customize the appearance by modifying these variables in the script:
+
+```javascript
+const charsPerLine = 240;  // Characters per line
+const fontSize = 12;        // Font size in pixels
+const lineHeight = 14;      // Line height in pixels
+const maxHeight = 40000;    // Maximum image height
+```
+
+## 📄 License
+
+MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 👨‍💻 Author
+
+**Thierry Sudan**
+- GitHub: [@thierry-sudan](https://github.com/thierry-sudan)
+
+## 🙏 Acknowledgments
+
+- Built with [node-canvas](https://github.com/Automattic/node-canvas)
+- Inspired by the need to work around LLM context limits
+
+---
+
+⭐ If you find this project useful, please consider giving it a star on GitHub!
